@@ -23,32 +23,33 @@ def get_page_data(html):
     soup = BeautifulSoup(html, 'lxml')
     ads = soup.find('div', class_='catalog_list').find_all('div', class_='item_table')
 
-    for ad in ads:
-        try:
-            title = ad.find('div', class_='description').find('h3').text.strip()
-        except:
-            title = ''
-        try:
-            url = 'https://www.avito.ru' + ad.find('div', class_='description').find('a').get('href')
-        except:
-            url = ''
-        try:
-            price = ad.find('div', class_='about').text.strip()
-        except:
-            price = ''
-        try:
-            metro = ad.find('div', class_='data').find_all('p')[-1].text.strip()
-        except:
-            metro = ''
-            
-        data = {'title': title,
-                'price': price,
-                'metro': metro,
-                'url': url}
+    if 'htc' in name:
+        for ad in ads:
+            try:
+                title = ad.find('div', class_='description').find('h3').text.strip()
+            except:
+                title = ''
+            try:
+                url = 'https://www.avito.ru' + ad.find('div', class_='description').find('a').get('href')
+            except:
+                url = ''
+            try:
+                price = ad.find('div', class_='about').text.strip()
+            except:
+                price = ''
+            try:
+                metro = ad.find('div', class_='data').find_all('p')[-1].text.strip()
+            except:
+                metro = ''
+                
+            data = {'title': title,
+                    'price': price,
+                    'metro': metro,
+                    'url': url}
 
-        write_csv(data)
-
-
+            write_csv(data)
+        else:
+            continue
 
 
 def main():
